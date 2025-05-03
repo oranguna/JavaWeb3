@@ -1,6 +1,15 @@
 pipeline {
     agent any
+
     stages {
+        stage('Clean Old Artifact') {
+            steps {
+                sh """
+                    rm -rf target
+                """
+            }
+        }
+
         stage('Build') {
             steps {
                 sh """
@@ -8,6 +17,7 @@ pipeline {
                 """
             }
         }
+
         stage('Upload Artifact') {
             steps {
                 sh """
@@ -16,6 +26,7 @@ pipeline {
                 """
             }
         }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying...'
@@ -23,3 +34,4 @@ pipeline {
         }
     }
 }
+
